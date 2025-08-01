@@ -22,14 +22,28 @@ void testPrintColorMap() {
     int result = printColorMap();
     std::cout.rdbuf(oldCoutBuffer);
     std::string output = oss.str();
-    assert(result == 25);  // This passes
-    assert(output.find("White | Orange") != std::string::npos); 
-    assert(output.find("Violet | Slate") != std::string::npos); 
-    std::cout << "All is well (maybe!)\n";
+
+    bool testPassed = true;
+
+    if (result != 25) {
+        std::cerr << "❌ Failed: Expected result = 25, got " << result << "\n";
+        testPassed = false;
+    }
+    if (output.find("White | Orange") == std::string::npos) {
+        std::cerr << "❌ Failed: 'White | Orange' not found in output\n";
+        testPassed = false;
+    }
+    if (output.find("Violet | Slate") == std::string::npos) {
+        std::cerr << "❌ Failed: 'Violet | Slate' not found in output\n";
+        testPassed = false;
+    }
+
+    if (testPassed) {
+        std::cout << "✅ All is well!\n";
+    } else {
+        std::cout << "❌ Some test cases failed\n";
+    }
     
     
 }
-int main() {
-    testPrintColorMap();
-    return 0;
-}
+
