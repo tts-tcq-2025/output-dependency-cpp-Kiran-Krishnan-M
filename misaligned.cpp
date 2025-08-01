@@ -27,4 +27,9 @@ void testPrintColorMap() {
     assert(output.find("Violet | Slate") != std::string::npos); 
     std::cout << "All is well (maybe!)\n";
     
+    
+}
+int main() {
+    testPrintColorMap();
+    return 0;
 }
