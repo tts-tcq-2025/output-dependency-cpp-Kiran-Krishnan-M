@@ -17,5 +17,8 @@ void testPrintColorMap() {
     std::cout << "\nPrint color map test\n"; 
     int result = printColorMap();
     assert(result == 25);
+    std::string expected = "White | Orange";
+    std::cout << "Check manually if 'White | Orange' and all 25 combinations appear.\n";
     std::cout << "All is well (maybe!)\n";
+    
 }
