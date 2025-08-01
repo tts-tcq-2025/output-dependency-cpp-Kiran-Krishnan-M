@@ -23,8 +23,8 @@ void testPrintColorMap() {
     std::cout.rdbuf(oldCoutBuffer);
     std::string output = oss.str();
     assert(result == 25);  // This passes
-    assert(output.find("White | Orange") != std::string::npos);  // ❌ This will FAIL due to bug
-    assert(output.find("Violet | Slate") != std::string::npos);  // ❌ This will also FAIL due to bug
+    assert(output.find("White | Orange") != std::string::npos); 
+    assert(output.find("Violet | Slate") != std::string::npos); 
     std::cout << "All is well (maybe!)\n";
     
 }
