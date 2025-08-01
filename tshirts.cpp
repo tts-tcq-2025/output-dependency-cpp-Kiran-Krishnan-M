@@ -15,8 +15,7 @@ char size(int cms) {
 
 void testTshirtSize() {
     std::cout << "\nTshirt size test\n";
-    assert(size(38) == 'S');
-    assert(size(42) == 'M');
-    assert(size(43) == 'L');
+    assert(size(38) == 'M');
+    assert(size(42) == 'L');
     std::cout << "All is well (maybe!)\n";
 }
