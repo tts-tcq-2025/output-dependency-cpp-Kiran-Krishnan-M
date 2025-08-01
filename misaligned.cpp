@@ -16,8 +16,9 @@ int printColorMap() {
 void testPrintColorMap() {
     std::cout << "\nPrint color map test\n"; 
     int result = printColorMap();
-    assert(output.find("White | Orange") != std::string::npos); // ❗ this will fail if the bug exists
-    assert(output.find("Violet | Slate") != std::string::npos);
+    assert(result == 25);  // This passes
+    assert(output.find("White | Orange") != std::string::npos);  // ❌ This will FAIL due to bug
+    assert(output.find("Violet | Slate") != std::string::npos);  // ❌ This will also FAIL due to bug
     std::cout << "All is well (maybe!)\n";
     
 }
