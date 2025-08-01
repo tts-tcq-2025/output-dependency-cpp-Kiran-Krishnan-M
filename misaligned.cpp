@@ -32,19 +32,11 @@ int printColorMap(const std::vector<ColorPair>& colorMap) {
 void testPrintColorMap() {
     std::cout << "\nRunning strengthened color map test...\n";
     std::vector<ColorPair> map = generateColorMap();
-    assert(map.size() == 25); // this will still pass
+    assert(map.size() == 25); // OK
 
-    // Stronger check: validate actual values
-    ColorPair expectedFirst = {"White", "Blue"};
-    ColorPair expectedLast = {"Violet", "Slate"};
-
-    assert(map[0].majorColor == expectedFirst.majorColor && map[0].minorColor == expectedFirst.minorColor); // FAIL
-    assert(map[24].majorColor == expectedLast.majorColor && map[24].minorColor == expectedLast.minorColor); // FAIL
+    // This will always fail due to the bug in minorColor[i]
+    ColorPair expectedAtIndex1 = {"White", "Orange"};
+    assert(map[1].majorColor == expectedAtIndex1.majorColor && map[1].minorColor == expectedAtIndex1.minorColor);
 
     std::cout << "All is well (not really!)\n";
-}
-
-int main() {
-    testPrintColorMap();
-    return 0;
 }
