@@ -70,11 +70,5 @@ void testPrintColorMap() {
 
 }
  
-int main() {
 
-    testPrintColorMap();
-
-    return 0;
-
-}
  
