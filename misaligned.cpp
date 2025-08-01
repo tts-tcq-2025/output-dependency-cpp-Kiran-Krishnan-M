@@ -1,21 +1,36 @@
-#include <iostream>
-#include <assert.h>
+#include <vector>
+#include <string>
+#include <tuple>
 
-int printColorMap() {
+using ColorMapEntry = std::tuple<int, std::string, std::string>;
+
+std::vector<ColorMapEntry> getColorMapWithBug() {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
-    int i = 0, j = 0;
-    for(i = 0; i < 5; i++) {
-        for(j = 0; j < 5; j++) {
-            std::cout << i * 5 + j << " | " << majorColor[i] << " | " << minorColor[i] << "\n";
+    
+    std::vector<ColorMapEntry> result;
+    for(int i = 0; i < 5; ++i) {
+        for(int j = 0; j < 5; ++j) {
+            result.emplace_back(i * 5 + j, majorColor[i], minorColor[i]); // BUG: minorColor[i]
         }
     }
-    return i * j;
+    return result;
 }
 
-void testPrintColorMap() {
-    std::cout << "\nPrint color map test\n"; 
-    int result = printColorMap();
-    assert(result == 25);
-    std::cout << "All is well (maybe!)\n";
-} 
+void testColorMapInteraction() {
+    auto colorMap = getColorMapWithBug();
+
+    // Expected: entry 1 should be 1 | White | Orange
+    int index = 1;
+    int number;
+    std::string major, minor;
+
+    std::tie(number, major, minor) = colorMap[index];
+
+    // interaction test: mapping between number and color pair
+    assert(number == 1);
+    assert(major == "White");
+    assert(minor == "Orange"); // ❌ FAILS because minor == "White"
+    
+    std::cout << "Test completed (should fail on minor color mismatch)\n";
+}
