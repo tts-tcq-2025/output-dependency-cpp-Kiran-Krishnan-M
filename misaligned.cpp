@@ -15,10 +15,12 @@ int printColorMap() {
 
 void testPrintColorMap() {
     std::cout << "\nPrint color map test\n"; 
+    std::ostringstream oss;
+    std::streambuf* oldCoutBuffer = std::cout.rdbuf();  
+    std::cout.rdbuf(oss.rdbuf()); 
     int result = printColorMap();
-    std::cout.rdbuf(oldCoutBuffer);  // Restore original cout buffer
-
-    std::string output = oss.str();  // Captured output
+    std::cout.rdbuf(oldCoutBuffer);
+    std::string output = oss.str();
     assert(result == 25);  // This passes
     assert(output.find("White | Orange") != std::string::npos);  // ❌ This will FAIL due to bug
     assert(output.find("Violet | Slate") != std::string::npos);  // ❌ This will also FAIL due to bug
