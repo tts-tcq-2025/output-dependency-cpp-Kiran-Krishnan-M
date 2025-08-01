@@ -1,3 +1,5 @@
+#include <iostream>   // ✅ required for std::cout
+#include <cassert>    // ✅ required for assert
 #include <vector>
 #include <string>
 #include <tuple>
@@ -11,7 +13,7 @@ std::vector<ColorMapEntry> getColorMapWithBug() {
     std::vector<ColorMapEntry> result;
     for(int i = 0; i < 5; ++i) {
         for(int j = 0; j < 5; ++j) {
-            result.emplace_back(i * 5 + j, majorColor[i], minorColor[i]); // BUG: minorColor[i]
+            result.emplace_back(i * 5 + j, majorColor[i], minorColor[i]); // BUG: should be minorColor[j]
         }
     }
     return result;
@@ -27,10 +29,8 @@ void testColorMapInteraction() {
 
     std::tie(number, major, minor) = colorMap[index];
 
-    // interaction test: mapping between number and color pair
     assert(number == 1);
     assert(major == "White");
-    assert(minor == "Orange"); // ❌ FAILS because minor == "White"
-    
+    assert(minor == "Orange"); // ❌ Will fail here
     std::cout << "Test completed (should fail on minor color mismatch)\n";
 }
