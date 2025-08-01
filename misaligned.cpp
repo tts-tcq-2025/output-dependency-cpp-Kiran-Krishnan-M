@@ -7,6 +7,7 @@ int printColorMap() {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
 
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
+    bool isInterchanged = false;
 
     int i = 0, j = 0;
 
@@ -15,12 +16,18 @@ int printColorMap() {
         for(j = 0; j < 5; j++) {
 
             std::cout << i * 5 + j << " | " << majorColor[i] << " | " << minorColor[i] << "\n";
+         
+                if (expectedMinorColor[i] != expectedMinorColor[j]) {
+
+                isInterchanged = true;
+
+                break;
 
         }
 
     }
 
-    return i * j;
+    return isInterchanged;
 
 }
  
@@ -30,39 +37,9 @@ void testPrintColorMap() {
 
     int result = printColorMap();
 
-    assert(result == 25);
+
+    assert(isInterchanged == false);
  
-    // Check if the minor color index is incorrectly using 'i' instead of 'j'
-
-    const char* expectedMajorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
-
-    const char* expectedMinorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
-
-    bool isInterchanged = false;
- 
-    for(int i = 0; i < 5; i++) {
-
-        for(int j = 0; j < 5; j++) {
-
-            if (expectedMinorColor[i] != expectedMinorColor[j]) {
-
-                isInterchanged = true;
-
-                break;
-
-            }
-
-        }
-
-        if (isInterchanged) break;
-
-    }
- 
-    if (isInterchanged) {
-
-        std::cout << "Error: The minor color index is interchanged with the major color index.\n";
-
-    } else {
 
         std::cout << "All is well (maybe!)\n";
 
