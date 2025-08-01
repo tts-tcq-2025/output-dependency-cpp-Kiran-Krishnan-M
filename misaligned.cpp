@@ -6,6 +6,10 @@
 
 using namespace std;
 
+// Define colors at file scope so they're accessible everywhere
+const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
+const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
+
 struct ColorPair {
     int number;
     string majorColor;
@@ -19,8 +23,6 @@ struct ColorPair {
 };
 
 vector<ColorPair> generateColorMap() {
-    const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
-    const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
     vector<ColorPair> colorMap;
     
     for(int i = 0; i < 5; i++) {
