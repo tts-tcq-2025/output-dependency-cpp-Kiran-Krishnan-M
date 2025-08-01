@@ -29,15 +29,18 @@ void testColorMappings() {
     std::cout << "\nColor map test\n";
     std::vector<ColorPair> colorMappings = generateColorMappings();
     assert(colorMappings.size() == 25);  // Test for size
-    // Add more tests to verify correctness of mappings
+    
+    // Validate major colors against expected colors
+    const char* expectedMajorColors[] = {"White", "Red", "Black", "Yellow", "Violet"};
+    const char* expectedMinorColors[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
+    
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
             int index = i * 5 + j;
-            assert(colorMappings[index].majorColor == generateColorMappings()[index].majorColor);
-            assert(colorMappings[index].minorColor == generateColorMappings()[index].minorColor);
+            assert(colorMappings[index].majorColor == expectedMajorColors[i]);  // Should pass
+            assert(colorMappings[index].minorColor == expectedMinorColors[j]);  // Should fail due to original bug
         }
     }
-    std::cout << "All tests passed (maybe!)\n";
 }
 
 int main() {
