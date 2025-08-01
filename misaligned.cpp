@@ -15,23 +15,25 @@ int printColorMap() {
 }
 
 void testPrintColorMap() {
-    std::cout << "\nPrint color map test\n";
-
-    // Declare stream objects locally inside the function
-    std::ostringstream oss;
-    std::streambuf* oldCoutBuffer = std::cout.rdbuf(oss.rdbuf()); // Redirect cout to capture
+    std::ostringstream capturedOutput;
+    std::streambuf* originalBuffer = std::cout.rdbuf();
+    std::cout.rdbuf(capturedOutput.rdbuf());
 
     int result = printColorMap();
 
-    std::cout.rdbuf(oldCoutBuffer); // Restore original cout
+    std::cout.rdbuf(originalBuffer);
+    std::string output = capturedOutput.str();
 
-    std::string output = oss.str();
-
+    // Test return value
     assert(result == 25);
-    assert(output.find("0 | White | Blue") != std::string::npos);
-    assert(output.find("1 | White | Orange") != std::string::npos);  // Will fail if bug exists
-    assert(output.find("4 | White | Slate") != std::string::npos);   // Will fail if bug exists
 
-    std::cout << "All is well (maybe!)\n";
+    // Test specific color pair combinations
+    assert(output.find("0 | White | Blue") != std::string::npos);
+    assert(output.find("1 | White | Orange") != std::string::npos);  // Would fail with original bug
+    assert(output.find("6 | Red | Green") != std::string::npos);     // Would fail with original bug
+    assert(output.find("12 | Black | Brown") != std::string::npos);  // Would fail with original bug
+    assert(output.find("24 | Violet | Slate") != std::string::npos);
+
+    std::cout << "All is well (definitely!)\n";
 }
 
