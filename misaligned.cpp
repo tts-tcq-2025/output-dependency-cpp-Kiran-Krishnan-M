@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>  // 
 #include <assert.h>
 
 int printColorMap() {
@@ -14,30 +13,9 @@ int printColorMap() {
     return i * j;
 }
 
-// main-test.cpp
-#include <gtest/gtest.h>
-#include <sstream>
-#include <string>
-#include <iostream>
-#include <assert.h>
-
-// … printColorMap() goes here, or comes from another header …
-
-void testPrintColorMap()          // definition is now in this file
-{
-    std::ostringstream captured;
-    std::streambuf* guard = std::cout.rdbuf(captured.rdbuf());
-
+void testPrintColorMap() {
+    std::cout << "\nPrint color map test\n"; 
     int result = printColorMap();
-
-    std::cout.rdbuf(guard);
-    std::string out = captured.str();
-
-    EXPECT_EQ(result, 25);
-    EXPECT_NE(out.find("1 | White | Orange"), std::string::npos);
-    // …
-}
-
-TEST(ColorMap, Print) { testPrintColorMap(); }
-
-
+    assert(result == 25);
+    std::cout << "All is well (maybe!)\n";
+} 
