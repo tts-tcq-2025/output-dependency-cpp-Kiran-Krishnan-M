@@ -17,22 +17,20 @@ int printColorMap() {
 void testPrintColorMap() {
     std::cout << "\nPrint color map test\n";
 
-    // Redirect std::cout to oss to capture output
-    oldCoutBuffer = std::cout.rdbuf(oss.rdbuf());
+    // Declare stream objects locally inside the function
+    std::ostringstream oss;
+    std::streambuf* oldCoutBuffer = std::cout.rdbuf(oss.rdbuf()); // Redirect cout to capture
 
     int result = printColorMap();
 
-    // Restore original cout
-    std::cout.rdbuf(oldCoutBuffer);
-    
+    std::cout.rdbuf(oldCoutBuffer); // Restore original cout
+
     std::string output = oss.str();
 
     assert(result == 25);
-
-    // Check for expected valid output (will fail due to bug)
-    assert(output.find("0 | White | Blue") != std::string::npos);   // ✅ correct
-    assert(output.find("1 | White | Orange") != std::string::npos); // ✅ should be there, will FAIL
-    assert(output.find("4 | White | Slate") != std::string::npos);  // ✅ should be there, will FAIL
+    assert(output.find("0 | White | Blue") != std::string::npos);
+    assert(output.find("1 | White | Orange") != std::string::npos);  // Will fail if bug exists
+    assert(output.find("4 | White | Slate") != std::string::npos);   // Will fail if bug exists
 
     std::cout << "All is well (maybe!)\n";
 }
