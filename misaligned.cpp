@@ -23,6 +23,8 @@ int printColorMap() {
 
                 break;
 
+                 }
+
         }
 
     }
