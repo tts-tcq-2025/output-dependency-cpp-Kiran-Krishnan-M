@@ -15,35 +15,25 @@ int printColorMap() {
 }
 
 void testPrintColorMap() {
-    std::cout << "\nPrint color map test\n"; 
-    std::ostringstream oss;
-    std::streambuf* oldCoutBuffer = std::cout.rdbuf();  
-    std::cout.rdbuf(oss.rdbuf()); 
+    std::cout << "\nPrint color map test\n";
+
+    // Redirect std::cout to oss to capture output
+    oldCoutBuffer = std::cout.rdbuf(oss.rdbuf());
+
     int result = printColorMap();
+
+    // Restore original cout
     std::cout.rdbuf(oldCoutBuffer);
+    
     std::string output = oss.str();
 
-    bool testPassed = true;
+    assert(result == 25);
 
-    if (result != 25) {
-        std::cerr << "❌ Failed: Expected result = 25, got " << result << "\n";
-        testPassed = false;
-    }
-    if (output.find("White | Orange") == std::string::npos) {
-        std::cerr << "❌ Failed: 'White | Orange' not found in output\n";
-        testPassed = false;
-    }
-    if (output.find("Violet | Slate") == std::string::npos) {
-        std::cerr << "❌ Failed: 'Violet | Slate' not found in output\n";
-        testPassed = false;
-    }
+    // Check for expected valid output (will fail due to bug)
+    assert(output.find("0 | White | Blue") != std::string::npos);   // ✅ correct
+    assert(output.find("1 | White | Orange") != std::string::npos); // ✅ should be there, will FAIL
+    assert(output.find("4 | White | Slate") != std::string::npos);  // ✅ should be there, will FAIL
 
-    if (testPassed) {
-        std::cout << "✅ All is well!\n";
-    } else {
-        std::cout << "❌ Some test cases failed\n";
-    }
-    
-    
+    std::cout << "All is well (maybe!)\n";
 }
 
