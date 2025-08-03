@@ -17,7 +17,6 @@ std::vector<ColorPair> getColorMap() {
 
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
-            // BUG: using minorColor[i] instead of minorColor[j]
             colorMap.push_back({i * 5 + j, majorColor[i], minorColor[i]});
         }
     }
@@ -44,14 +43,10 @@ void testColorMapSize() {
 
 void testUniqueColorPairs() {
     auto colorMap = getColorMap();
-
-    // Fail if any pair is repeated or invalid
     std::vector<std::string> expectedMinor = {"Blue", "Orange", "Green", "Brown", "Slate"};
     for(int i = 0; i < 25; ++i) {
         int expectedMinorIndex = i % 5;
         std::string expected = expectedMinor[expectedMinorIndex];
-
-        // ❌ This assertion will FAIL due to bug
         assert(colorMap[i].minorColor == expected && "Minor color does not match expected value");
     }
 }
@@ -62,4 +57,5 @@ void testPrintColorMap() {
     assert(count == 25);
     std::cout << "Print test done (but color content is incorrect!)\n";
 }
+
 
