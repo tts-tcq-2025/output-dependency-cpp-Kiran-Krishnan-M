@@ -10,6 +10,7 @@ struct ColorPair {
     std::string minorColor;
 };
 
+// Function with BUG: Using minorColor[i] instead of minorColor[j]
 std::vector<ColorPair> getColorMap() {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
@@ -17,7 +18,7 @@ std::vector<ColorPair> getColorMap() {
 
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
-            colorMap.push_back({i * 5 + j, majorColor[i], minorColor[i]});
+            colorMap.push_back({i * 5 + j, majorColor[i], minorColor[i]}); // <-- BUG here
         }
     }
     return colorMap;
@@ -36,9 +37,10 @@ int printColorMap() {
     }
     return colorMap.size();
 }
+
 void testColorMapSize() {
     auto colorMap = getColorMap();
-    assert(colorMap.size() == 25); // This will pass
+    assert(colorMap.size() == 25); // ✅ Will pass
 }
 
 void testUniqueColorPairs() {
@@ -47,6 +49,8 @@ void testUniqueColorPairs() {
     for(int i = 0; i < 25; ++i) {
         int expectedMinorIndex = i % 5;
         std::string expected = expectedMinor[expectedMinorIndex];
+
+        // ❌ Will FAIL due to bug in getColorMap()
         assert(colorMap[i].minorColor == expected && "Minor color does not match expected value");
     }
 }
@@ -58,4 +62,9 @@ void testPrintColorMap() {
     std::cout << "Print test done (but color content is incorrect!)\n";
 }
 
-
+int main() {
+    testColorMapSize();        // Should pass
+    testUniqueColorPairs();    // ❌ Will fail and abort
+    testPrintColorMap();       // Should pass (but data will be wrong)
+    return 0;
+}
