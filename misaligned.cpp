@@ -9,17 +9,18 @@ struct ColorPair {
     std::string minorColor;
 };
 
+const char* majorColors[] = {"White", "Red", "Black", "Yellow", "Violet"};
+const char* minorColors[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
+
 std::vector<ColorPair> getColorMap() {
-    const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
-    const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
     std::vector<ColorPair> colorPairs;
     
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
             colorPairs.push_back({
                 i * 5 + j,
-                majorColor[i],
-                minorColor[i]  // Bug is preserved here (should be minorColor[j])
+                majorColors[i],
+                minorColors[i]  // Bug is preserved here (should be minorColors[j])
             });
         }
     }
@@ -46,13 +47,13 @@ void testPrintColorMap() {
     
     assert(colorMap[5].number == 5);
     assert(colorMap[5].majorColor == "Red");
-    assert(colorMap[5].minorColor == "Blue");  // This will fail due to the bug
+    assert(colorMap[5].minorColor == "Orange");  // This will fail due to the bug
     
     // Test 3: Verify all minor colors are correct
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
             int index = i * 5 + j;
-            assert(colorMap[index].minorColor == minorColor[j]);  // This will fail
+            assert(colorMap[index].minorColor == minorColors[j]);  // This will fail
         }
     }
     
@@ -63,7 +64,3 @@ void testPrintColorMap() {
     
     std::cout << "All tests passed!\n";
 }
-
-
-
-
