@@ -54,8 +54,10 @@ void testPrintColorMap() {
 }
 
 int main() {
-    testColorMapOutput();
+    testPrintColorMap();  // Correct function name
     printColorMap();
     return 0;
 }
+
+
 
