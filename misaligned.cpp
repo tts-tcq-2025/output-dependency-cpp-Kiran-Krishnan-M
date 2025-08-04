@@ -1,38 +1,67 @@
-#include <gtest/gtest.h>
-#include <vector>
+#include <iostream>
+#include <assert.h>
 #include <string>
+#include <vector>
 
 struct ColorPair {
-    int pairNumber;
+    int number;
     std::string majorColor;
     std::string minorColor;
 };
 
-std::vector<ColorPair> getColorPairs() {
-    const char* major[] = { "White","Red","Black","Yellow","Violet" };
-    const char* minor[] = { "Blue","Orange","Green","Brown","Slate" };
-    std::vector<ColorPair> pairs;
-    for (int i = 0; i < 5; ++i) {
-        for (int j = 0; j < 5; ++j) {
-            pairs.push_back({i * 5 + j, major[i], minor[i]});  // bug: minor[i]
+std::vector<ColorPair> getColorMap() {
+    const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
+    const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
+    std::vector<ColorPair> colorPairs;
+    
+    for(int i = 0; i < 5; i++) {
+        for(int j = 0; j < 5; j++) {
+            colorPairs.push_back({
+                i * 5 + j,
+                majorColor[i],
+                minorColor[i]  // Bug is preserved here (should be minorColor[j])
+            });
         }
     }
-    return pairs;
+    return colorPairs;
 }
 
-TEST(ColorMapTest, ExposesMinorColorMisalignment) {
-    auto cp = getColorPairs();
-    ASSERT_EQ(cp.size(), 25);
+int printColorMap() {
+    auto colorMap = getColorMap();
+    for(const auto& pair : colorMap) {
+        std::cout << pair.number << " | " << pair.majorColor << " | " << pair.minorColor << "\n";
+    }
+    return colorMap.size();
+}
 
-    EXPECT_EQ(cp[0].minorColor, "Blue");
-
-    EXPECT_FATAL_FAILURE({
-        ASSERT_EQ(cp[1].minorColor, "Orange");
-    }, "Orange");
-
-    EXPECT_FATAL_FAILURE({
-        ASSERT_EQ(cp[5].minorColor, "Blue");
-    }, "Blue");
+void testPrintColorMap() {
+    // Test 1: Verify the count
+    auto colorMap = getColorMap();
+    assert(colorMap.size() == 25);
+    
+    // Test 2: Verify some specific color pairs
+    assert(colorMap[0].number == 0);
+    assert(colorMap[0].majorColor == "White");
+    assert(colorMap[0].minorColor == "Blue");  // This will fail due to the bug
+    
+    assert(colorMap[5].number == 5);
+    assert(colorMap[5].majorColor == "Red");
+    assert(colorMap[5].minorColor == "Blue");  // This will fail due to the bug
+    
+    // Test 3: Verify all minor colors are correct
+    for(int i = 0; i < 5; i++) {
+        for(int j = 0; j < 5; j++) {
+            int index = i * 5 + j;
+            assert(colorMap[index].minorColor == minorColor[j]);  // This will fail
+        }
+    }
+    
+    // Test 4: Verify number sequence
+    for(int i = 0; i < 25; i++) {
+        assert(colorMap[i].number == i);
+    }
+    
+    std::cout << "All tests passed!\n";
 }
 
 
