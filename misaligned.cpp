@@ -38,7 +38,7 @@ int printColorMap() {
 }
 
 // Strong tests that make the bug visible
-void testColorMapOutput() {
+void testPrintColorMap() {
     auto colorPairs = getColorPairs();
     assert(colorPairs.size() == 25);
 
@@ -58,3 +58,4 @@ int main() {
     printColorMap();
     return 0;
 }
+
