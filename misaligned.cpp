@@ -2,30 +2,31 @@
 #include <vector>
 #include <string>
 
-struct ColorPair {
-    int pairNumber;
-    std::string majorColor;
-    std::string minorColor;
-};
+struct ColorPair { int pairNumber; std::string majorColor, minorColor; };
 
 std::vector<ColorPair> getColorPairs() {
-    const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
-    const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
-    std::vector<ColorPair> colorPairs;
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            // Bug: wrong minorColor[i] instead of minorColor[j]
-            colorPairs.push_back({i * 5 + j, majorColor[i], minorColor[i]});
-        }
-    }
-    return colorPairs;
+    const char* major[] = { "White","Red","Black","Yellow","Violet" };
+    const char* minor[] = { "Blue","Orange","Green","Brown","Slate" };
+    std::vector<ColorPair> pairs;
+    for(int i=0; i<5; ++i)
+      for(int j=0; j<5; ++j)
+        pairs.push_back({i*5+j, major[i], minor[i]});  // Bug: minor[i]
+    return pairs;
 }
 
-TEST(ColorMapTest, ExposesMisalignedBug) {
-    auto colorPairs = getColorPairs();
-    ASSERT_EQ(colorPairs.size(), 25);
+TEST(ColorMapTest, MinorColorMisaligned) {
+    auto cp = getColorPairs();
+    ASSERT_EQ(cp.size(), 25);
 
-    EXPECT_EQ(colorPairs[0].minorColor, "Blue");   // Passes
-    EXPECT_EQ(colorPairs[1].minorColor, "Orange"); // FAILS with bug
-    EXPECT_EQ(colorPairs[5].minorColor, "Blue");   // FAILS with bug
+    EXPECT_EQ(cp[0].minorColor, "Blue");  // passes
+    EXPECT_FATAL_FAILURE(
+        EXPECT_EQ(cp[1].minorColor, "Orange"),
+        "Orange"
+    );
+    EXPECT_FATAL_FAILURE(
+        EXPECT_EQ(cp[5].minorColor, "Blue"),
+        "Blue"
+    );
 }
+
+
