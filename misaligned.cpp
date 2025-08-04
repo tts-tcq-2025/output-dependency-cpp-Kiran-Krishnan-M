@@ -1,61 +1,60 @@
 #include <iostream>
-#include <vector>
-#include <string>
 #include <sstream>
+#include <vector>
+#include <cassert>
+#include <string>
 
 struct ColorPair {
-    int index;
+    int pairNumber;
     std::string majorColor;
     std::string minorColor;
 };
 
-std::vector<ColorPair> getColorMap() {
+std::vector<ColorPair> getColorPairs() {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
-    std::vector<ColorPair> colorMap;
-
-    for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 5; j++) {
-            colorMap.push_back({i * 5 + j, majorColor[i], minorColor[j]});
+    std::vector<ColorPair> colorPairs;
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            // Bug here: minorColor[i] used instead of minorColor[j]
+            colorPairs.push_back({i * 5 + j, majorColor[i], minorColor[i]});
         }
     }
-    return colorMap;
+    return colorPairs;
 }
 
-std::string formatColorPair(const ColorPair& cp) {
+std::string formatColorPair(const ColorPair& pair) {
     std::ostringstream oss;
-    oss << cp.index << " | " << cp.majorColor << " | " << cp.minorColor;
+    oss << pair.pairNumber << " | " << pair.majorColor << " | " << pair.minorColor;
     return oss.str();
 }
 
 int printColorMap() {
-    auto colorMap = getColorMap();
-    for(const auto& cp : colorMap) {
-        std::cout << formatColorPair(cp) << std::endl;
+    auto colorPairs = getColorPairs();
+    for (const auto& pair : colorPairs) {
+        std::cout << formatColorPair(pair) << "\n";
     }
-    return static_cast<int>(colorMap.size());
-}
-#include <gtest/gtest.h>
-#include <vector>
-#include <string>
-#include "colormap.cpp"  // or use a header file if available
-
-TEST(ColorMapTest, SizeIs25) {
-    auto colorMap = getColorMap();
-    EXPECT_EQ(colorMap.size(), 25);
+    return colorPairs.size();
 }
 
-TEST(ColorMapTest, UniqueMinorColorsPerRow) {
-    auto colorMap = getColorMap();
-    std::vector<std::string> expectedMinor = {"Blue", "Orange", "Green", "Brown", "Slate"};
-    for(int i = 0; i < 25; ++i) {
-        int expectedMinorIndex = i % 5;
-        std::string expected = expectedMinor[expectedMinorIndex];
-        EXPECT_EQ(colorMap[i].minorColor, expected) << "Mismatch at index " << i;
-    }
+// Strong tests that make the bug visible
+void testColorMapOutput() {
+    auto colorPairs = getColorPairs();
+    assert(colorPairs.size() == 25);
+
+    // Now test specific entries
+    assert(colorPairs[0].majorColor == "White");
+    assert(colorPairs[0].minorColor == "Blue"); // This will fail due to bug
+
+    assert(colorPairs[1].minorColor == "Orange"); // This will also fail
+    assert(colorPairs[5].majorColor == "Red");
+    assert(colorPairs[5].minorColor == "Blue"); // Should be Blue, will be Orange (bug)
+
+    std::cout << "All tests should have failed if bug is present!\n";
 }
 
-TEST(ColorMapTest, PrintFunctionReturnsCorrectCount) {
-    int count = printColorMap();
-    EXPECT_EQ(count, 25);
+int main() {
+    testColorMapOutput();
+    printColorMap();
+    return 0;
 }
