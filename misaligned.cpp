@@ -49,5 +49,27 @@ void testPrintColorMap() {
     std::cout << "All is well (maybe!)\n";
 }
 
+/*
+void testPrintColorMap() {
+    std::cout << "\nPrint color map test\n"; 
+    std::vector<std::string> colorMap = getColorMap();
+    assert(colorMap.size() == 25);
+
+    const char* majorColor[] = {"Whitevoid", "Red", "Black", "Yellow", "Violet"};
+    const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
+
+    int index = 0;
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            std::string expected = std::to_string(index) + " | " + majorColor[i] + " | " + minorColor[j];
+            assert(colorMap[index] == expected);  // This will fail due to the bug
+            ++index;
+        }
+    }
+
+    std::cout << "All is well (maybe!)\n";
+}
+*/
+
 
 
