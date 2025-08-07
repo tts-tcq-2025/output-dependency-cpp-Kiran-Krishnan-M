@@ -9,7 +9,6 @@ std::vector<std::string> getColorMap() {
     std::vector<std::string> colorMap;
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
-            // BUG: minorColor[i] should be minorColor[j]
             std::string entry = std::to_string(i * 5 + j) + " | " + majorColor[i] + " | " + minorColor[i];
             colorMap.push_back(entry);
         }
@@ -49,5 +48,6 @@ void testPrintColorMap() {
 
     std::cout << "All is well (maybe!)\n";
 }
+
 
 
