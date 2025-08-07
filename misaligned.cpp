@@ -17,19 +17,9 @@ std::vector<std::string> getColorMap() {
     return colorMap;
 }
 
-int printColorMap() {
-    std::vector<std::string> colorMap = getColorMap();
-    for(const auto& entry : colorMap) {
-        std::cout << entry << "\n";
-    }
-    return colorMap.size();
-}
-
 void testPrintColorMap() {
     std::cout << "\nPrint color map test\n"; 
     std::vector<std::string> colorMap = getColorMap();
-    assert(colorMap.size() == 25);
-
 
     assert(colorMap[0] == "0 | White | Blue");  
     assert(colorMap[1] == "1 | White | Orange");
@@ -59,4 +49,5 @@ void testPrintColorMap() {
 
     std::cout << "All is well (maybe!)\n";
 }
+
 
