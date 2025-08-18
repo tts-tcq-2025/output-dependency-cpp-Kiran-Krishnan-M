@@ -36,6 +36,16 @@ namespace WeatherSpace
             return 52;
         }
     };
+
+    // New stub to expose the bug
+    class RainyStub : public IWeatherSensor {
+        int Humidity() const override { return 80; }
+        int Precipitation() const override { return 70; } // High precipitation
+        double TemperatureInC() const override { return 26; } // >25
+        int WindSpeedKMPH() const override { return 40; } // <50
+    };
+
+
     string Report(const IWeatherSensor& sensor)
     {
         int precipitation = sensor.Precipitation();
@@ -54,9 +64,10 @@ namespace WeatherSpace
     
     void TestRainy()
     {
-        SensorStub sensor;
+        RainyStub sensor;
         string report = Report(sensor);
         cout << report << endl;
+         // Strengthened assert: should mention "rain", but it doesn't
         assert(report.find("rain") != string::npos);
     }
 
