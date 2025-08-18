@@ -8,17 +8,17 @@ namespace WeatherSpace
 {    
     class IWeatherSensor {
         public:
-            virtual double TemperatureInC() const = 0;
+            virtual double TemperatureInC() const = 0;  
             virtual int Precipitation() const = 0;
             virtual int Humidity() const = 0;
             virtual int WindSpeedKMPH() const = 0;
     };
-    /// <summary>
+    /// <summary> 
     /// This is a stub for a weather sensor. For the sake of testing 
     /// we create a stub that generates weather data and allows us to
     /// test the other parts of this application in isolation
     /// without needing the actual Sensor during development
-    /// </summary>
+    /// </summary> 
     class SensorStub : public IWeatherSensor {
         int Humidity() const override {
             return 72;
@@ -36,6 +36,16 @@ namespace WeatherSpace
             return 52;
         }
     };
+
+    // New stub to expose the bug
+    class RainyStub : public IWeatherSensor {
+        int Humidity() const override { return 80; }
+        int Precipitation() const override { return 70; } // High precipitation
+        double TemperatureInC() const override { return 26; } // >25
+        int WindSpeedKMPH() const override { return 40; } // <50
+    };
+
+
     string Report(const IWeatherSensor& sensor)
     {
         int precipitation = sensor.Precipitation();
@@ -54,9 +64,11 @@ namespace WeatherSpace
     
     void TestRainy()
     {
-        SensorStub sensor;
+        RainyStub sensor;
         string report = Report(sensor);
-        cout << report << endl;
+        cout << "TestRainy: " << report << endl;
+
+         // Strengthened assert: should mention "rain", but it doesn't
         assert(report.find("rain") != string::npos);
     }
 
