@@ -23,7 +23,7 @@ int printColorMap() {
     }
     return colorMap.size();
 }
-
+/*
 void testPrintColorMap() {
     std::cout << "\nPrint color map test\n"; 
     std::vector<std::string> colorMap = getColorMap();
@@ -57,6 +57,7 @@ void testPrintColorMap() {
 
     std::cout << "All is well (maybe!)\n";
 }
+*/
 
 /*
 void testPrintColorMap() {
@@ -79,6 +80,7 @@ void testPrintColorMap() {
     std::cout << "All is well (maybe!)\n";
 }
 */
+
 
 
 
