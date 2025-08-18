@@ -18,7 +18,7 @@ namespace WeatherSpace
     /// we create a stub that generates weather data and allows us to
     /// test the other parts of this application in isolation
     /// without needing the actual Sensor during development
-    /// </summary>
+    /// </summary> 
     class SensorStub : public IWeatherSensor {
         int Humidity() const override {
             return 72;
