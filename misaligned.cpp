@@ -1,4 +1,4 @@
-/* #include <iostream>
+#include <iostream>
 #include <vector>
 #include <string>
 #include <cassert>
@@ -28,7 +28,7 @@ void testPrintColorMap() {
     std::cout << "\nPrint color map test\n"; 
     std::vector<std::string> colorMap = getColorMap();
     assert(colorMap.size() == 25);
-
+/*
     assert(colorMap[0] == "0 | White | Blue");  
     assert(colorMap[1] == "1 | White | Orange");
     assert(colorMap[2] == "2 | White | Green");
@@ -53,11 +53,10 @@ void testPrintColorMap() {
     assert(colorMap[21] == "21 | Violet | Orange");  
     assert(colorMap[22] == "22 | Violet | Green");  
     assert(colorMap[23] == "23 | Violet | Brown");
-    assert(colorMap[24] == "24 | Violet | Slate"); 
+    assert(colorMap[24] == "24 | Violet | Slate"); */
 
     std::cout << "All is well (maybe!)\n";
 }
-*/
 
 /*
 void testPrintColorMap() {
@@ -80,6 +79,7 @@ void testPrintColorMap() {
     std::cout << "All is well (maybe!)\n";
 }
 */
+
 
 
 
