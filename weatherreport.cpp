@@ -66,7 +66,8 @@ namespace WeatherSpace
     {
         RainyStub sensor;
         string report = Report(sensor);
-        cout << report << endl;
+        cout << "TestRainy: " << report << endl;
+
          // Strengthened assert: should mention "rain", but it doesn't
         assert(report.find("rain") != string::npos);
     }
