@@ -1,8 +1,8 @@
-#include <iostream>
+/* #include <iostream>
 #include <vector>
 #include <string>
 #include <cassert>
-/*
+
 std::vector<std::string> getColorMap() {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
@@ -80,6 +80,7 @@ void testPrintColorMap() {
     std::cout << "All is well (maybe!)\n";
 }
 */
+
 
 
 
