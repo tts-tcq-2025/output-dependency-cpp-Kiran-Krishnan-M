@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <cassert>
-
+/*
 std::vector<std::string> getColorMap() {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
@@ -23,7 +23,7 @@ int printColorMap() {
     }
     return colorMap.size();
 }
-/*
+
 void testPrintColorMap() {
     std::cout << "\nPrint color map test\n"; 
     std::vector<std::string> colorMap = getColorMap();
@@ -80,6 +80,7 @@ void testPrintColorMap() {
     std::cout << "All is well (maybe!)\n";
 }
 */
+
 
 
 
