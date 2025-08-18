@@ -13,7 +13,7 @@ namespace WeatherSpace
             virtual int Humidity() const = 0;
             virtual int WindSpeedKMPH() const = 0;
     };
-    /// <summary>
+    /// <summary> 
     /// This is a stub for a weather sensor. For the sake of testing 
     /// we create a stub that generates weather data and allows us to
     /// test the other parts of this application in isolation
